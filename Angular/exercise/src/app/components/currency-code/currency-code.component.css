@@ -1,0 +1,63 @@
+.currency-form-container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
+.currency-form-container h3 {
+    text-align: center;
+    margin-bottom: 16px; /* było 24px */
+    color: #333;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* było 16px */
+    align-items: center;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 2px; /* było 4px */
+    color: #444;
+}
+
+input.form-control {
+    width: 75%;
+    max-width: 300px;
+    padding: 8px 10px; /* delikatnie mniejsze pole */
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+    font-size: 15px; /* lekko mniejsza czcionka */
+    margin-bottom: 6px; /* było 10px */
+}
+
+input.form-control:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.2);
+}
+
+.btn.btn-primary {
+    margin-top: 12px; /* było 20px */
+    padding: 8px;
+    width: 25%;
+    font-size: 15px;
+    border: none;
+    border-radius: 6px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: center;
+}
+
+.btn.btn-primary:hover {
+    background-color: #0056b3;
+}
