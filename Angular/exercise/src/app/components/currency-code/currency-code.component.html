@@ -2,10 +2,24 @@
     <form #currency="ngForm" (ngSubmit)="submit(currency)">
         <div class = "form-group">
             <h3>Podaj walutę</h3>
+            
+            <!--Currency input-->
+            <ng-container *ngIf="currencyError !='' ">
+                <div class="error">{{currencyError}}</div>
+                <br>
+            </ng-container>
             <label for="currency">Waluta</label><br>
             <input type="text" name = "currency" class="form-control" ngModel><br>
+            
+            <!--Nickname input-->
+            <ng-container *ngIf="nicknameError !='' ">
+                <div class="error">{{nicknameError}}</div>
+                <br>
+            </ng-container>
             <label for="nickname">Nazwa użytkownika</label><br>
             <input type="text" name = "nickname" class="form-control" ngModel>
+            
+            <!--Submit Button-->
             <button class="btn btn-primary" type="submit">Wyślij</button>
         </div>
     </form>
