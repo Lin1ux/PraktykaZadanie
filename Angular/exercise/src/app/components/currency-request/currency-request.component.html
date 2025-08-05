@@ -1,1 +1,15 @@
-<p>currency-request works!</p>
+<div>
+    <form #request="ngForm" (ngSubmit)="submit(request)">
+        <div class = "form-group">
+            <h3>Podaj Nazwę użytkownika</h3>
+            <!--nickname Request input-->
+            <ng-container *ngIf="!nicknameValidationInfo.validationPass">
+                <div class="error">{{nicknameValidationInfo.errorMessage}}</div>
+                <br>
+            </ng-container>
+            <label for="nickname">Nazwa Użytkownika</label><br>
+            <input type="text" name = "nickname" class="form-control" ngModel><br>
+            <button class="btn btn-primary" type="submit">Wyślij</button>
+        </div>
+    </form>
+</div>

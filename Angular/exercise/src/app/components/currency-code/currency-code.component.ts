@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CurrencyService } from '../../service/currency.service';
 import { CommonModule } from '@angular/common';
+import { validationInfo } from '../../utility/validationInfo';
+import { Validation } from '../../utility/validation';
 
 @Component({
   selector: 'app-currency-code',
@@ -11,61 +13,28 @@ import { CommonModule } from '@angular/common';
 })
 export class CurrencyCodeComponent 
 {
-  currencyError : String = "";
-  nicknameError : String = "";
+  currencyValidationInfo : validationInfo = new validationInfo(true,"");
+  nicknameValidationInfo : validationInfo = new validationInfo(true,"");
+  response : String = "";
   
   constructor(private currencyService: CurrencyService) {}
 
-  validateCurrency(currency: string) : Boolean
-  {
-    if(currency.length != 3)
-    {
-      this.currencyError = "Waluta powinna składać się z 3 znaków";
-      return false;
-    }
-    if(!/^[A-Z]+$/.test(currency.toUpperCase()))
-    {
-      this.currencyError = "Waluta powinna składać się z liter";
-      return false;
-    }
-    return true;
-  }
-  validateNickname(nickname: string)
-  {
-    if(nickname.length < 2)
-    {
-      this.nicknameError = "Nazwa użytkownika powinna się składać z co najmniej 2 znaków";
-      return false;
-    }
-    if(nickname.length > 50)
-    {
-      this.nicknameError = "Przekroczono limit długości nazwy użytkownika";
-      return false;
-    }
-    if(!/^[0-9a-zA-Z _]+$/.test(nickname))
-    {
-      this.nicknameError = "Nazwa użytkownika może składać się z liter, cyfr, spacji i _";
-      return false;
-    }
-    return true;
-  }
-
   submit(currencyForm:NgForm)
-  {
-    this.nicknameError = "";
-    this.currencyError = "";
-    
+  { 
     const formData = {
       currency: currencyForm.value.currency,
       nickname: currencyForm.value.nickname
     };
 
-    
-    if(!this.validateCurrency(formData.currency))
+    //Currency Validation
+    this.currencyValidationInfo = Validation.validateCurrency(formData.currency);
+    if(!this.currencyValidationInfo.validationPass)
     {
       return;
     }
-    if(!this.validateNickname(formData.nickname))
+    //Nickname Validation
+    this.nicknameValidationInfo = Validation.validateNickname(formData.nickname);
+    if(!this.nicknameValidationInfo.validationPass)
     {
       return;
     }
@@ -75,6 +44,8 @@ export class CurrencyCodeComponent
       {
         next: (response) => {
           console.log("Sukces");
+          console.log("Otrzymana wartość waluty:", response.value);
+          this.response = response.value;
         },
         error: (err) =>
         {

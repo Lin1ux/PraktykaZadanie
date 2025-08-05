@@ -1,11 +1,45 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
+import { validationInfo } from '../../utility/validationInfo';
+import { CurrencyService } from '../../service/currency.service';
+import { Validation } from '../../utility/validation';
 
 @Component({
   selector: 'app-currency-request',
-  imports: [],
+  imports: [FormsModule,CommonModule],
   templateUrl: './currency-request.component.html',
   styleUrl: './currency-request.component.css'
 })
-export class CurrencyRequestComponent {
+export class CurrencyRequestComponent 
+{
+  nicknameValidationInfo : validationInfo = new validationInfo(true,"");
 
+  constructor(private currencyService: CurrencyService) {}
+
+  submit(requestForm: NgForm)
+  {
+    const formData = {
+      nickname: requestForm.value.nickname
+    };
+
+    this.nicknameValidationInfo = Validation.validateNickname(formData.nickname);
+    if(!this.nicknameValidationInfo.validationPass)
+    {
+       return;
+    }
+
+    console.log("Nazwa Użytkownika wysłana",formData.nickname);
+    this.currencyService.postNicknameData(formData).subscribe(
+      {
+        next: (response) => {
+          console.log("Sukces");
+        },
+        error: (err) =>
+        {
+          console.log("Error",err.message);
+        }
+      }
+    );
+  }
 }

@@ -4,16 +4,16 @@
             <h3>Podaj walutę</h3>
             
             <!--Currency input-->
-            <ng-container *ngIf="currencyError !='' ">
-                <div class="error">{{currencyError}}</div>
+            <ng-container *ngIf="!currencyValidationInfo.validationPass">
+                <div class="error">{{currencyValidationInfo.errorMessage}}</div>
                 <br>
             </ng-container>
             <label for="currency">Waluta</label><br>
             <input type="text" name = "currency" class="form-control" ngModel><br>
             
             <!--Nickname input-->
-            <ng-container *ngIf="nicknameError !='' ">
-                <div class="error">{{nicknameError}}</div>
+            <ng-container *ngIf="!currencyValidationInfo.validationPass">
+                <div class="error">{{nicknameValidationInfo.errorMessage}}</div>
                 <br>
             </ng-container>
             <label for="nickname">Nazwa użytkownika</label><br>
