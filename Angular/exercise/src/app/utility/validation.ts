@@ -46,7 +46,7 @@ export class Validation
     }
     if(!/^[0-9a-zA-Z _]+$/.test(nickname))
     {
-      info.setInfo(false,"Nazwa użytkownika może składać się z liter, cyfr, spacji i _");
+      info.setInfo(false,"Nazwa użytkownika może składać się z angielskich liter, cyfr, spacji i _");
       return info;
     }
     return info;

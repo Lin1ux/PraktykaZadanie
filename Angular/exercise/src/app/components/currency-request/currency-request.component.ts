@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { validationInfo } from '../../utility/validationInfo';
 import { CurrencyService } from '../../service/currency.service';
 import { Validation } from '../../utility/validation';
+import { NicknameResponse } from '../../models/CurrencyRequest';
 
 @Component({
   selector: 'app-currency-request',
@@ -14,6 +15,7 @@ import { Validation } from '../../utility/validation';
 export class CurrencyRequestComponent 
 {
   nicknameValidationInfo : validationInfo = new validationInfo(true,"");
+  response: NicknameResponse[] = [];
 
   constructor(private currencyService: CurrencyService) {}
 
@@ -32,8 +34,9 @@ export class CurrencyRequestComponent
     console.log("Nazwa Użytkownika wysłana",formData.nickname);
     this.currencyService.postNicknameData(formData).subscribe(
       {
-        next: (response) => {
+        next: (response: NicknameResponse[]) => {
           console.log("Sukces");
+          this.response = response || [];
         },
         error: (err) =>
         {

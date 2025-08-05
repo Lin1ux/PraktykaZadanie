@@ -50,7 +50,7 @@ public class Validation
         if (!Utility.CorrectNickname(nickname))
         {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
-                    "Nazwa użytkownika może składać się z liter, cyfr, spacji i _");
+                    "Nazwa użytkownika może składać się z angielskich liter, cyfr, spacji i _");
         }
     }
 }

@@ -1,4 +1,4 @@
-<div>
+<div class="component">
     <form #currency="ngForm" (ngSubmit)="submit(currency)">
         <div class = "form-group">
             <h3>Podaj walutę</h3>
@@ -23,4 +23,9 @@
             <button class="btn btn-primary" type="submit">Wyślij</button>
         </div>
     </form>
+    <ng-container  *ngIf="response != ''">
+        <div class="response-container">
+            kurs wynosi: {{response}}
+        </div>
+    </ng-container>
 </div>

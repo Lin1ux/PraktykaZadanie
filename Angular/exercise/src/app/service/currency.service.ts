@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { NicknameResponse } from '../models/CurrencyRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -17,16 +18,18 @@ export class CurrencyService
   {
     return this.http.post<{value:string}>(this.currencyApiUrl,data)
   }
-  getCurrencyData(currency: string, nickname: string): Observable<any>
+  
+  //Post data to currency requests API
+  postNicknameData(data: {nickname: string}): Observable<NicknameResponse[]>
+  {
+    return this.http.post<NicknameResponse[]>(this.currencyRequestApiUrl,data)
+  }
+
+  /*getCurrencyData(currency: string, nickname: string): Observable<any>
   {
     const params = new HttpParams().set("currency",currency).set("nickname",nickname);
 
     return this.http.get(this.currencyRequestApiUrl, {params} )
-  }
+  }*/
 
-  //Post data to currency requests API
-  postNicknameData(data: {nickname: string})
-  {
-    return this.http.post(this.currencyRequestApiUrl,data)
-  }
 }

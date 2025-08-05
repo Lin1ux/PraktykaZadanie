@@ -1,4 +1,4 @@
-<div>
+<div  class="component">
     <form #request="ngForm" (ngSubmit)="submit(request)">
         <div class = "form-group">
             <h3>Podaj Nazwę użytkownika</h3>
@@ -12,4 +12,14 @@
             <button class="btn btn-primary" type="submit">Wyślij</button>
         </div>
     </form>
+    <div *ngIf="response.length > 0">
+        <div  *ngFor="let item of response">
+            <div class="response-container">
+                <br>
+                Nazwa użytkownika {{item.nickname}}<br>
+                Data {{item.date}}<br>
+                Wynik {{item.value}} {{item.currency}}<br>
+            </div>
+        </div>
+    </div>
 </div>

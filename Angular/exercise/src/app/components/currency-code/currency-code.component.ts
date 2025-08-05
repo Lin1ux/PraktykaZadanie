@@ -26,6 +26,8 @@ export class CurrencyCodeComponent
       nickname: currencyForm.value.nickname
     };
 
+    this.response = "";
+
     //Currency Validation
     this.currencyValidationInfo = Validation.validateCurrency(formData.currency);
     if(!this.currencyValidationInfo.validationPass)
