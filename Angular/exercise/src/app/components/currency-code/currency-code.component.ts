@@ -51,7 +51,11 @@ export class CurrencyCodeComponent
         },
         error: (err) =>
         {
-          console.log("Error",err.message);
+          console.log("Error",err.status);
+          if(err.status == 406)
+          {
+            this.currencyValidationInfo.setInfo(false,"Podana waluta nie istnieje");
+          }
         }
       }
     );

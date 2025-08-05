@@ -40,7 +40,7 @@ export class CurrencyRequestComponent
         },
         error: (err) =>
         {
-          console.log("Error",err.message);
+          console.log("Error",err.status);
         }
       }
     );

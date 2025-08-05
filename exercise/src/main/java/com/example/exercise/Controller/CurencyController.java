@@ -1,24 +1,35 @@
 package com.example.exercise.Controller;
 
 import com.example.exercise.Model.CurrencyRequest;
+import com.example.exercise.Model.NBP.NBPResponse;
+import com.example.exercise.Model.NBP.Rate;
+import com.example.exercise.Services.CurrencyService;
 import com.example.exercise.Validation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.example.exercise.Model.NBP.Currency;
+import java.util.*;
 
 @SpringBootApplication
 @RestController
 public class CurencyController
 {
+    private CurrencyService currencyService;
+
+    @Autowired
+    public CurencyController(CurrencyService currencyService)
+    {
+        this.currencyService = currencyService;
+    }
+
+
     //Gives currency based on API
     @PostMapping("/currencies/get-current-currency-value-command")
-    public Map<String,String> GetCurrentCurrency(@RequestBody Map<String,String> request) throws ResponseStatusException
+    public Map<String,Float> GetCurrentCurrency(@RequestBody Map<String,String> request) throws ResponseStatusException
     {
         //Get Data
         String currency = request.get("currency");
@@ -30,11 +41,14 @@ public class CurencyController
         currency = currency.toUpperCase();          //Uppercase currency
 
         //Response
-        Map<String,String> response = new HashMap<>();
+        Map<String,Float> response = new HashMap<>();
 
-        response.put("value","0.0000");
+        //Send Request to NBP API
+        Float value = currencyService.getCurrencyValue(currency);
+        response.put("value",value);
+        //response.put("value","0.000f");
+        System.out.println(nickname+" "+currency+" "+value);
 
-        System.out.println(currency+" "+nickname);
         return response;
     }
 
