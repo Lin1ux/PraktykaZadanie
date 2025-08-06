@@ -21,15 +21,33 @@ public class CurrencyService
     private RestTemplate restTemplate;
 
     //Return list of currencies
-    public List<Rate> currencyList()
+    public List<Rate> currencyList() throws ResponseStatusException
     {
-        NBPResponse[] response = restTemplate.getForObject(NBPCurrencyAPI, NBPResponse[].class);
+        NBPResponse[] response;
+        try
+        {
+            response = restTemplate.getForObject(NBPCurrencyAPI, NBPResponse[].class);
+        }
+        catch (Exception e)
+        {
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
+                    "Serwer nie dostępny");
+        }
         return response[0].GetRates();
     }
     //Return value of currency
     public Float getCurrencyValue(String currency) throws ResponseStatusException
     {
-        NBPResponse[] response = restTemplate.getForObject(NBPCurrencyAPI, NBPResponse[].class);
+        NBPResponse[] response;
+        try
+        {
+            response = restTemplate.getForObject(NBPCurrencyAPI, NBPResponse[].class);
+        }
+        catch (Exception e)
+        {
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
+                    "Serwer nie dostępny");
+        }
         List<Rate> RatesList = response[0].GetRates();
         Float value = -1.0f;
         for(Rate rate: RatesList)

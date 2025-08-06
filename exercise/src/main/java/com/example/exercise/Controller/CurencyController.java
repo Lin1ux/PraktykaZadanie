@@ -89,17 +89,14 @@ public class CurencyController
         return response;
     }
 
-    //Function made for testing
+    //Function made for testing. Sends empty Requests list
     @GetMapping("/test")
     public List<CurrencyRequest> RequestCurrency()
     {
         //Get Data
-        System.out.println("TEST1");
-
+        System.out.println("Testing");
         //Response
         List<CurrencyRequest> response = new ArrayList<CurrencyRequest>();
-
-        System.out.println("TEST2");
 
         return response;
     }

@@ -35,6 +35,10 @@ export class CurrencyRequestComponent
         },
         error: (err) => {
           console.error('Błąd pobierania danych:', err);
+          if(err.status == 503)
+          {
+            this.nicknameValidationInfo.setInfo(false,"Serwer nie odpowiada");
+          }
         }
       });
 

@@ -45,8 +45,6 @@ export class CurrencyCodeComponent
     this.currencyService.postCurrencyData(formData).subscribe(
       {
         next: (response) => {
-          console.log("Sukces");
-          console.log("Otrzymana wartość waluty:", response.value);
           this.response = response.value;
         },
         error: (err) =>
@@ -55,6 +53,10 @@ export class CurrencyCodeComponent
           if(err.status == 406)
           {
             this.currencyValidationInfo.setInfo(false,"Podana waluta nie istnieje");
+          }
+          if(err.status == 503)
+          {
+            this.currencyValidationInfo.setInfo(false,"Serwer nie odpowiada");
           }
         }
       }
