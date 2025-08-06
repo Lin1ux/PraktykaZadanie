@@ -25,10 +25,26 @@ export class CurrencyRequestComponent
       nickname: requestForm.value.nickname
     };
 
+    if(!formData.nickname)
+    {
+      this.currencyService.getAllData().subscribe({
+        next: (response: NicknameResponse[]) => {
+          this.response = response; 
+          console.log('Otrzymane dane:', response);
+          this.nicknameValidationInfo.setInfo(true,"");
+        },
+        error: (err) => {
+          console.error('Błąd pobierania danych:', err);
+        }
+      });
+
+      return;
+    }
+    
     this.nicknameValidationInfo = Validation.validateNickname(formData.nickname);
     if(!this.nicknameValidationInfo.validationPass)
     {
-       return;
+      return;
     }
 
     console.log("Nazwa Użytkownika wysłana",formData.nickname);

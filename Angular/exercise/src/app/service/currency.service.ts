@@ -9,7 +9,8 @@ import { NicknameResponse } from '../models/CurrencyRequest';
 export class CurrencyService 
 {
   private currencyApiUrl = 'http://localhost:8080/currencies/get-current-currency-value-command';
-  private currencyRequestApiUrl = 'http://localhost:8080/currencies/requests';
+  private currencyRequestApiUrl = 'http://localhost:8080/currencies/request';
+  private AllRequestApiUrl = 'http://localhost:8080/currencies/requests';
 
   constructor(private http: HttpClient) {}
 
@@ -25,11 +26,9 @@ export class CurrencyService
     return this.http.post<NicknameResponse[]>(this.currencyRequestApiUrl,data)
   }
 
-  /*getCurrencyData(currency: string, nickname: string): Observable<any>
+  //Get data to currency requests API
+  getAllData(): Observable<NicknameResponse[]>
   {
-    const params = new HttpParams().set("currency",currency).set("nickname",nickname);
-
-    return this.http.get(this.currencyRequestApiUrl, {params} )
-  }*/
-
+    return this.http.get<NicknameResponse[]>(this.AllRequestApiUrl)
+  }
 }

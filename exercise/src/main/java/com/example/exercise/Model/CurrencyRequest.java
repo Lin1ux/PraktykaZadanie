@@ -31,15 +31,7 @@ public class CurrencyRequest
     @Column(name = "value")
     private Float value;
 
-    public CurrencyRequest(String currency, String nickname, LocalDateTime  date, Float value)
-    {
-        this.id = 0;
-        this.currency = currency;
-        this.nickname = nickname;
-        this.date = date;
-        this.value = value;
-    }
-
+    //Constructor used do save data to database
     public CurrencyRequest(String currency, String nickname, Float value)
     {
         this.currency = currency;
@@ -47,15 +39,13 @@ public class CurrencyRequest
         this.value = value;
     }
 
-    /*public String getCurrency() { return currency; }
-    public void setCurrency(String currency) { this.currency = currency; }
+    public String getNickname()
+    {
+        return this.nickname;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getDate() { return date; }
-    public void setDate(String date) { this.date = date; }
-
-    public Float getValue() { return value; }
-    public void setValue(Float value) { this.value = value; }*/
+    public void setNickname(String nickname)
+    {
+        this.nickname = nickname;
+    }
 }

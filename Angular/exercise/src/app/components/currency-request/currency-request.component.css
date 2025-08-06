@@ -75,6 +75,23 @@ input.form-control:focus
     align-self: center;
 }
 
+.center-content {
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    flex-direction: column;   
+    text-align: center;
+}
+
+.response-container {
+    border: 1px solid #ccc;
+    padding: 16px;
+    margin: 10px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    width: 300px;
+}
+
 .btn.btn-primary:hover 
 {
     background-color: #0056b3;
@@ -84,3 +101,4 @@ input.form-control:focus
 {
     color: red;
 }
+

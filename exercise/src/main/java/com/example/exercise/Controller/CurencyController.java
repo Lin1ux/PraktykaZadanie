@@ -22,7 +22,6 @@ import java.util.*;
 public class CurencyController
 {
     private CurrencyService currencyService;
-    @Autowired
     private CurrencyDBService currencyDBService;
 
     @Autowired
@@ -32,8 +31,7 @@ public class CurencyController
         this.currencyDBService = currencyDBService;
     }
 
-
-    //Gives currency based on API
+    //Gives currency based from NBP API
     @PostMapping("/currencies/get-current-currency-value-command")
     public Map<String,Float> GetCurrentCurrency(@RequestBody Map<String,String> request) throws ResponseStatusException
     {
@@ -58,13 +56,13 @@ public class CurencyController
         CurrencyRequest RequestData = new CurrencyRequest(currency,nickname,value);
         currencyDBService.saveCurrencyRequest(RequestData);
 
-        System.out.println(nickname+" "+currency+" "+value);
+        System.out.println("Response to: "+nickname+" Currency: "+currency+" Value: "+value);
 
         return response;
     }
 
     //Gives all data related to given nickname
-    @PostMapping("/currencies/requests")
+    @PostMapping("/currencies/request")
     public List<CurrencyRequest> RequestCurrency(@RequestBody Map<String,String> request) throws ResponseStatusException
     {
         //Get Data
@@ -72,15 +70,21 @@ public class CurencyController
 
         Validation.nicknameValidation(nickname);
 
-        //Response
-        List<CurrencyRequest> response = new ArrayList<CurrencyRequest>();
-        CurrencyRequest testReq = new CurrencyRequest("PLN","Kowalski", LocalDateTime.now(),1.0f);
-        CurrencyRequest testReq2 = new CurrencyRequest("EUR","Nowak",LocalDateTime.now(),1.828231f);
+        //Get Request History of user from Data base
+        List<CurrencyRequest> response = currencyDBService.getRequestsByNickname(nickname);
 
-        response.add(testReq);
-        response.add(testReq2);
+        System.out.println("Send requests of "+nickname+"\n"+response);
 
-        System.out.println(nickname);
+        return response;
+    }
+
+    @GetMapping("/currencies/requests")
+    public List<CurrencyRequest> GetAllRequests()
+    {
+        //Get Request History from Data base
+        List<CurrencyRequest> response = currencyDBService.getAllRequests();
+
+        System.out.println("Send all requests");
 
         return response;
     }
@@ -94,11 +98,6 @@ public class CurencyController
 
         //Response
         List<CurrencyRequest> response = new ArrayList<CurrencyRequest>();
-        CurrencyRequest testReq = new CurrencyRequest("PLN","Kowalski",LocalDateTime.now(),1.0f);
-        CurrencyRequest testReq2 = new CurrencyRequest("EUR","Nowak",LocalDateTime.now(),1.828231f);
-
-        response.add(testReq);
-        response.add(testReq2);
 
         System.out.println("TEST2");
 
