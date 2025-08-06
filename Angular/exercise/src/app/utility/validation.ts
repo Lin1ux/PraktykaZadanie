@@ -44,9 +44,23 @@ export class Validation
       info.setInfo(false,"Przekroczono limit długości nazwy użytkownika");
       return info;
     }
-    if(!/^[0-9a-zA-Z _]+$/.test(nickname))
+    if (!/^\S+\s\S+$/.test(nickname)) {
+      info.setInfo(false, "Imię i Nazwisko powinno być oddzielone jedną spacją");
+      return info;
+    }
+    if(!/^[a-zA-Z\s]+$/.test(nickname))
     {
-      info.setInfo(false,"Nazwa użytkownika może składać się z angielskich liter, cyfr, spacji i _");
+      info.setInfo(false,"Imię i Nazwisko może składać się tylko z angielskich liter");
+      return info;
+    }
+    if(!/^[A-Z]/.test(nickname))
+    {
+      info.setInfo(false,"Imię powinno zaczynać się z dużej litery");
+      return info;
+    }
+    if(!/(?<=\s)[A-Z]/.test(nickname))
+    {
+      info.setInfo(false,"Nazwisko powinno zaczynać się z dużej litery");
       return info;
     }
     return info;

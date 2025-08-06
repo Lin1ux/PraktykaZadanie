@@ -41,6 +41,7 @@ export class CurrencyCodeComponent
     {
       return;
     }
+    console.log("WYSŁANO", this.nicknameValidationInfo.errorMessage);
         
     //POST data
     this.currencyService.postCurrencyData(formData).subscribe(

@@ -5,7 +5,7 @@ CREATE TABLE nbp.nbp_requests (
     name VARCHAR(255),
     currency VARCHAR(255),
     request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    value INT
+    value DECIMAL(10, 4)
 );
 
 INSERT INTO nbp.nbp_requests (nickname, currency, value)
