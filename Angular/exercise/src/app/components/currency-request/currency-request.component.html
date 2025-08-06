@@ -17,8 +17,8 @@
             <div class="response-container">
                 <br>
                 Nazwa użytkownika {{item.nickname}}<br>
-                Data {{item.date}}<br>
-                Waluta{{item.currency}}<br>
+                Data {{item.date | date: 'HH:mm dd:MM:yyyy'}}<br>
+                Waluta {{item.currency}}<br>
                 Wynik {{item.value}}<br>
             </div>
         </div>

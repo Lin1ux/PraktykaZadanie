@@ -3,6 +3,7 @@ package com.example.exercise.Controller;
 import com.example.exercise.Model.CurrencyRequest;
 import com.example.exercise.Model.NBP.NBPResponse;
 import com.example.exercise.Model.NBP.Rate;
+import com.example.exercise.Services.CurrencyDBService;
 import com.example.exercise.Services.CurrencyService;
 import com.example.exercise.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.exercise.Model.NBP.Currency;
+
+import java.time.LocalDateTime;
 import java.util.*;
 
 @SpringBootApplication
@@ -19,11 +22,14 @@ import java.util.*;
 public class CurencyController
 {
     private CurrencyService currencyService;
+    @Autowired
+    private CurrencyDBService currencyDBService;
 
     @Autowired
-    public CurencyController(CurrencyService currencyService)
+    public CurencyController(CurrencyService currencyService,CurrencyDBService currencyDBService)
     {
         this.currencyService = currencyService;
+        this.currencyDBService = currencyDBService;
     }
 
 
@@ -35,8 +41,9 @@ public class CurencyController
         String currency = request.get("currency");
         String nickname = request.get("nickname");
 
+        //Validation
         Validation.currencyValidation(currency);    //Validate currency
-        Validation.nicknameValidation(currency);    //Validate nickname
+        Validation.nicknameValidation(nickname);    //Validate nickname
 
         currency = currency.toUpperCase();          //Uppercase currency
 
@@ -46,7 +53,11 @@ public class CurencyController
         //Send Request to NBP API
         Float value = currencyService.getCurrencyValue(currency);
         response.put("value",value);
-        //response.put("value","0.000f");
+
+        //Save data in database
+        CurrencyRequest RequestData = new CurrencyRequest(currency,nickname,value);
+        currencyDBService.saveCurrencyRequest(RequestData);
+
         System.out.println(nickname+" "+currency+" "+value);
 
         return response;
@@ -63,8 +74,8 @@ public class CurencyController
 
         //Response
         List<CurrencyRequest> response = new ArrayList<CurrencyRequest>();
-        CurrencyRequest testReq = new CurrencyRequest("PLN","Kowalski","5.08.2025",1.0f);
-        CurrencyRequest testReq2 = new CurrencyRequest("EUR","Nowak","4.08.2025",1.828231f);
+        CurrencyRequest testReq = new CurrencyRequest("PLN","Kowalski", LocalDateTime.now(),1.0f);
+        CurrencyRequest testReq2 = new CurrencyRequest("EUR","Nowak",LocalDateTime.now(),1.828231f);
 
         response.add(testReq);
         response.add(testReq2);
@@ -74,7 +85,7 @@ public class CurencyController
         return response;
     }
 
-    //Function made to test ing
+    //Function made for testing
     @GetMapping("/test")
     public List<CurrencyRequest> RequestCurrency()
     {
@@ -83,8 +94,8 @@ public class CurencyController
 
         //Response
         List<CurrencyRequest> response = new ArrayList<CurrencyRequest>();
-        CurrencyRequest testReq = new CurrencyRequest("PLN","Kowalski","5.08.2025",1.0f);
-        CurrencyRequest testReq2 = new CurrencyRequest("EUR","Nowak","4.08.2025",1.828231f);
+        CurrencyRequest testReq = new CurrencyRequest("PLN","Kowalski",LocalDateTime.now(),1.0f);
+        CurrencyRequest testReq2 = new CurrencyRequest("EUR","Nowak",LocalDateTime.now(),1.828231f);
 
         response.add(testReq);
         response.add(testReq2);

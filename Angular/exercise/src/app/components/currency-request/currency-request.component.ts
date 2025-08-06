@@ -37,6 +37,7 @@ export class CurrencyRequestComponent
         next: (response: NicknameResponse[]) => {
           console.log("Sukces");
           this.response = response || [];
+          console.log(this.response);
         },
         error: (err) =>
         {
