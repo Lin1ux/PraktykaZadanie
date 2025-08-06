@@ -22,8 +22,8 @@ public class CurrencyRequest
     @Column(name = "currency")
     private String currency;
 
-    @Column(name = "nickname")
-    private String nickname;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "request_date",updatable = false,insertable = false)
     private LocalDateTime date;
@@ -32,20 +32,20 @@ public class CurrencyRequest
     private Float value;
 
     //Constructor used do save data to database
-    public CurrencyRequest(String currency, String nickname, Float value)
+    public CurrencyRequest(String currency, String name, Float value)
     {
         this.currency = currency;
-        this.nickname = nickname;
+        this.name = name;
         this.value = value;
     }
 
-    public String getNickname()
+    public String getName()
     {
-        return this.nickname;
+        return this.name;
     }
 
-    public void setNickname(String nickname)
+    public void setName(String name)
     {
-        this.nickname = nickname;
+        this.name = name;
     }
 }

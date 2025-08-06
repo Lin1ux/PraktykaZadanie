@@ -31,7 +31,7 @@ public class CurrencyService
         catch (Exception e)
         {
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
-                    "Serwer nie dostępny");
+                    "Service Unavailable");
         }
         return response[0].GetRates();
     }
@@ -46,7 +46,7 @@ public class CurrencyService
         catch (Exception e)
         {
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
-                    "Serwer nie dostępny");
+                    "Service Unavailable");
         }
         List<Rate> RatesList = response[0].GetRates();
         Float value = -1.0f;
@@ -61,7 +61,7 @@ public class CurrencyService
         {
             return 1.0000f;
         }
-        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Nie istnieje taka waluta");
+        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "This currency don't exists");
     }
 
 }

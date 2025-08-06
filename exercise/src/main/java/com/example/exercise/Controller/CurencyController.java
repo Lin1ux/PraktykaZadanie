@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.exercise.Model.NBP.Currency;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -61,6 +60,17 @@ public class CurencyController
         return response;
     }
 
+    @GetMapping("/currencies/requests")
+    public List<CurrencyRequest> GetAllRequests()
+    {
+        //Get Request History from Data base
+        List<CurrencyRequest> response = currencyDBService.getAllRequests();
+
+        System.out.println("Send all requests");
+
+        return response;
+    }
+
     //Gives all data related to given nickname
     @PostMapping("/currencies/request")
     public List<CurrencyRequest> RequestCurrency(@RequestBody Map<String,String> request) throws ResponseStatusException
@@ -78,22 +88,10 @@ public class CurencyController
         return response;
     }
 
-    @GetMapping("/currencies/requests")
-    public List<CurrencyRequest> GetAllRequests()
-    {
-        //Get Request History from Data base
-        List<CurrencyRequest> response = currencyDBService.getAllRequests();
-
-        System.out.println("Send all requests");
-
-        return response;
-    }
-
-    //Function made for testing. Sends empty Requests list
+    //Endpoint made for testing. Sends empty Requests list
     @GetMapping("/test")
     public List<CurrencyRequest> RequestCurrency()
     {
-        //Get Data
         System.out.println("Testing");
         //Response
         List<CurrencyRequest> response = new ArrayList<CurrencyRequest>();

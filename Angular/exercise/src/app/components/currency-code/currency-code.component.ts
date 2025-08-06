@@ -21,6 +21,7 @@ export class CurrencyCodeComponent
 
   submit(currencyForm:NgForm)
   { 
+    //Format Data
     const formData = {
       currency: currencyForm.value.currency,
       nickname: currencyForm.value.nickname
@@ -41,7 +42,7 @@ export class CurrencyCodeComponent
       return;
     }
         
-    console.log("Form wysłany",formData.nickname,formData.currency);
+    //POST data
     this.currencyService.postCurrencyData(formData).subscribe(
       {
         next: (response) => {
@@ -50,9 +51,17 @@ export class CurrencyCodeComponent
         error: (err) =>
         {
           console.log("Error",err.status);
+          if(err.status == 400)
+          {
+            this.currencyValidationInfo.setInfo(false,"Błędne dane");
+          }
           if(err.status == 406)
           {
             this.currencyValidationInfo.setInfo(false,"Podana waluta nie istnieje");
+          }
+          if(err.status == 422)
+          {
+            this.currencyValidationInfo.setInfo(false,"Zła składnia danych");
           }
           if(err.status == 503)
           {

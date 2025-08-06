@@ -21,10 +21,12 @@ export class CurrencyRequestComponent
 
   submit(requestForm: NgForm)
   {
+    //Formating data
     const formData = {
       nickname: requestForm.value.nickname
     };
 
+    //Get data of all requests if input field is empty
     if(!formData.nickname)
     {
       this.currencyService.getAllData().subscribe({
@@ -44,6 +46,8 @@ export class CurrencyRequestComponent
 
       return;
     }
+
+    //Validation
     
     this.nicknameValidationInfo = Validation.validateNickname(formData.nickname);
     if(!this.nicknameValidationInfo.validationPass)
@@ -51,7 +55,7 @@ export class CurrencyRequestComponent
       return;
     }
 
-    console.log("Nazwa Użytkownika wysłana",formData.nickname);
+    //POST data of required user's request
     this.currencyService.postNicknameData(formData).subscribe(
       {
         next: (response: NicknameResponse[]) => {

@@ -11,19 +11,19 @@ public class Validation
         if(currency == null)
         {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Waluta nie może być pusta");
+                    "Currency can't be null");
         }
         //Wrong Length of Currency Exception
         if (currency.length() != 3)
         {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
-                    "Waluta powinna mieć zapis 3 literowy");
+                    "Currency must have 3 letters");
         }
         //Check is Letters only
         if(!Utility.LettersOnly(currency))
         {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
-                    "Waluta powinna składać się tylko liter");
+                    "Currency must have only letters");
         }
     }
     public static void nicknameValidation(String nickname) throws ResponseStatusException
@@ -32,25 +32,25 @@ public class Validation
         if (nickname == null)
         {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Nazwa Użytkownika nie może być pusta");
+                    "Name can't be null");
         }
         //Wrong Length of nickname
         if (nickname.length() < 2)
         {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
-                    "Nazwa Użytkownika powinna zawierać ponad 2 znaki");
+                    "Name should have at least 2 characters");
         }
         //Wrong Length of nickname
         if (nickname.length() > 50)
         {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
-                    "Przekroczono limit długości nazwy użytkownika");
+                    "Too many characters");
         }
         //Check Letters
         if (!Utility.CorrectNickname(nickname))
         {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
-                    "Nazwa użytkownika może składać się z angielskich liter, cyfr, spacji i _");
+                    "Name can only use english letters, numbers, spaces and _");
         }
     }
 }

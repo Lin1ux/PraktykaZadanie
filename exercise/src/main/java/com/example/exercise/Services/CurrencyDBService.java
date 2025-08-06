@@ -1,7 +1,7 @@
 package com.example.exercise.Services;
 
 import com.example.exercise.Model.CurrencyRequest;
-import com.example.exercise.Reposytory.CurrencyRepository;
+import com.example.exercise.Repository.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -26,34 +26,11 @@ public class CurrencyDBService
         catch (Exception e)
         {
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
-                    "Serwer nie dostępny");
+                    "Service Unavailable");
         }
     }
 
-    //Get all data associated with nickname from database
-    public List<CurrencyRequest> getRequestsByNickname(String nickname)
-    {
-        List<CurrencyRequest> RequestList = new ArrayList<CurrencyRequest>();
-        //Remove Requests with diffrent cases
-        try
-        {
-            for(CurrencyRequest req : currencyRepository.findByNickname(nickname))
-            {
-                if(req.getNickname().equals(nickname))
-                {
-                    RequestList.add(req);
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
-                    "Serwer nie odpowiada");
-        }
-        return RequestList;
-    }
-
-    //get all data from database
+    //Get all data from database
     public List<CurrencyRequest> getAllRequests()
     {
         try
@@ -63,7 +40,31 @@ public class CurrencyDBService
         catch (Exception e)
         {
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
-                    "Serwer nie dostępny");
+                    "Service Unavailable");
         }
     }
+
+    //Get all data associated with nickname from database
+    public List<CurrencyRequest> getRequestsByNickname(String name)
+    {
+        List<CurrencyRequest> RequestList = new ArrayList<CurrencyRequest>();
+        //Remove Requests with diffrent cases
+        try
+        {
+            for(CurrencyRequest req : currencyRepository.findByName(name))
+            {
+                if(req.getName().equals(name))
+                {
+                    RequestList.add(req);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
+                    "Service Unavailable");
+        }
+        return RequestList;
+    }
+
 }

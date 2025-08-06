@@ -2,7 +2,7 @@
 export interface NicknameResponse
 {
     currency: string;
-    nickname: string;
+    name: string;
     date: string;
     value: number;
 }

@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS nbp.nbp_requests;
 
 CREATE TABLE nbp.nbp_requests (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nickname VARCHAR(255),
+    name VARCHAR(255),
     currency VARCHAR(255),
     request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     value INT

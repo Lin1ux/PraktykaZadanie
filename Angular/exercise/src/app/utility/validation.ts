@@ -24,7 +24,7 @@ export class Validation
     }
     return info;
   }
-  //check if nickname is correct
+  //Check if nickname is correct
   static validateNickname(nickname: string) : validationInfo
   {
     const info: validationInfo = new validationInfo(true,"");

@@ -8,6 +8,7 @@ export class validationInfo
         this.setInfo(validationPass || false,errorMessage || "");
     }
 
+    //Setter
     public setInfo(validationPass: Boolean,errorMessage:String)
     {
         this.validationPass = validationPass;
