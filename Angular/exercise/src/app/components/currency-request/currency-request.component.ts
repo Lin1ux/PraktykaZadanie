@@ -1,45 +1,62 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { validationInfo } from '../../utility/validationInfo';
-import { CurrencyService } from '../../service/currency.service';
-import { Validation } from '../../utility/validation';
-import { NicknameResponse } from '../../models/CurrencyRequest';
+import { ValidationInfo } from '../../utilities/validationInfo';
+import { CurrencyService } from '../../services/currency.service';
+import { Validation } from '../../utilities/validation';
+import { NicknameResponse } from '../../models/currency-request';
+import { Subject, take, takeUntil } from 'rxjs';
+import { NicknameValidatorDirective } from '../../validators/nickname-validator.directive';
 
 @Component({
   selector: 'app-currency-request',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule,NicknameValidatorDirective],
   templateUrl: './currency-request.component.html',
   styleUrl: './currency-request.component.css'
 })
-export class CurrencyRequestComponent 
+export class CurrencyRequestComponent implements OnDestroy
 {
-  nicknameValidationInfo : validationInfo = new validationInfo(true,"");
-  response: NicknameResponse[] = [];
+  
+  public response: NicknameResponse[] = [];
+  public nicknameValidationInfo : ValidationInfo = new ValidationInfo(true,"");
+  public destroy$ = new Subject<void>();
+  public showError = false;
 
-  constructor(private currencyService: CurrencyService) {}
+  formData = {
+      currency: '',
+      nickname: ''
+    };
+  
+  constructor(
+    private currencyService: CurrencyService,
+  ) {}
+
+  ngOnDestroy(): void 
+  {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   submit(requestForm: NgForm)
   {
-    //Formating data
-    const formData = {
-      nickname: requestForm.value.nickname
-    };
-
-    //Get data of all requests if input field is empty
-    if(!formData.nickname)
+    this.showError = false;
+    if(!this.formData.nickname)
     {
-      this.currencyService.getAllData().subscribe({
+      this.currencyService.getAllData()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
         next: (response: NicknameResponse[]) => {
           this.response = response; 
           console.log('Otrzymane dane:', response);
-          this.nicknameValidationInfo.setInfo(true,"");
+          this.nicknameValidationInfo = new ValidationInfo(true,"");
         },
         error: (err) => {
           console.error('Błąd pobierania danych:', err);
           if(err.status == 503)
           {
-            this.nicknameValidationInfo.setInfo(false,"Serwer nie odpowiada");
+            this.nicknameValidationInfo = new ValidationInfo(false,"Serwer nie odpowiada");
           }
         }
       });
@@ -47,16 +64,24 @@ export class CurrencyRequestComponent
       return;
     }
 
-    //Validation
-    
-    this.nicknameValidationInfo = Validation.validateNickname(formData.nickname);
-    if(!this.nicknameValidationInfo.validationPass)
+    if(!requestForm.valid)
     {
+      this.showError = true;
       return;
     }
 
-    //POST data of required user's request
-    this.currencyService.postNicknameData(formData).subscribe(
+
+    /*this.nicknameValidationInfo = Validation.validateNickname(formData.nickname);
+    if(!this.nicknameValidationInfo.validationPass)
+    {
+      return;
+    }*/
+
+    this.currencyService.postNicknameData(this.formData)
+    .pipe(
+      takeUntil(this.destroy$)
+    )
+    .subscribe(
       {
         next: (response: NicknameResponse[]) => {
           console.log("Sukces");

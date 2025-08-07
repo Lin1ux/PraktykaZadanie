@@ -2,24 +2,43 @@
     <form #currency="ngForm" (ngSubmit)="submit(currency)">
         <div class = "form-group">
             <h3>Podaj walutę</h3>
+            <input 
+                type="text" 
+                name="currency" 
+                class="form-control" 
+                [(ngModel)]="formData.currency"
+                #currencyValue="ngModel"
+                appCurrencyValidator
+                required
+            >
+    
+            <div *ngIf="showError && currencyValue.invalid && (currencyValue.dirty || currencyValue.touched)">
+                <div class="error" *ngIf="currencyValue.hasError('customCurrencyError')">
+                    {{ currencyValue.getError('customCurrencyError') }}
+                </div>
+            </div>
+            <div *ngIf="currencyValidationInfo != ''">
+                <div class="error">
+                    {{ currencyValidationInfo }}
+                </div>
+            </div>
+            <label for="nickname">Imię i Nazwisko</label><br>
+            <input 
+                type="text" 
+                name="nickname" 
+                class="form-control" 
+                [(ngModel)]="formData.nickname"
+                #nickname="ngModel"
+                appNicknameValidator
+                required
+            >
+            <div *ngIf="showError && nickname.invalid && (nickname.dirty || nickname.touched)">
+                <div class="error" *ngIf="nickname.hasError('customNicknameError')">
+                    {{ nickname.getError('customNicknameError') }}
+                </div>
+            </div>
+            <br>
             
-            <!--Currency input-->
-            <ng-container *ngIf="!currencyValidationInfo.validationPass">
-                <div class="error">{{currencyValidationInfo.errorMessage}}</div>
-                <br>
-            </ng-container>
-            <label for="currency">Waluta</label><br>
-            <input type="text" name = "currency" class="form-control" ngModel><br>
-            
-            <!--Nickname input-->
-            <ng-container *ngIf="!nicknameValidationInfo.validationPass">
-                <div class="error">{{nicknameValidationInfo.errorMessage}}</div>
-                <br>
-            </ng-container>
-            <label for="nickname">Imie i Nazwisko</label><br>
-            <input type="text" name = "nickname" class="form-control" ngModel>
-            
-            <!--Submit Button-->
             <button class="btn btn-primary" type="submit">Wyślij</button>
         </div>
     </form>

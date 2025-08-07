@@ -2,30 +2,41 @@
     <form #request="ngForm" (ngSubmit)="submit(request)">
         <div class = "form-group">
             <h3>Podaj Nazwę użytkownika</h3>
-            <!--nickname Request input-->
-            <ng-container *ngIf="!nicknameValidationInfo.validationPass">
-                <div class="error">{{nicknameValidationInfo.errorMessage}}</div>
-                <br>
-            </ng-container>
-            <label for="nickname">Nazwa Użytkownika</label><br>
-            <input type="text" name = "nickname" class="form-control" ngModel><br>
+            <input 
+                type="text" 
+                name="nickname" 
+                class="form-control" 
+                [(ngModel)]="formData.nickname"
+                #nickname="ngModel"
+                appNicknameValidator
+                required
+            >
+            <div *ngIf="showError && nickname.invalid && (nickname.dirty || nickname.touched)">
+                <div class="error" *ngIf="nickname.hasError('customNicknameError')">
+                    {{ nickname.getError('customNicknameError') }}
+                </div>
+            </div>
+            <br>
             <button class="btn btn-primary" type="submit">Wyślij</button>
         </div>
     </form>
     <div class="center-content" *ngIf="response.length > 0">
         <div  *ngFor="let item of response">
             <div class="response-container">
-                Imię i Nazwisko: {{item.name}}<br>
-                Data: {{item.date | date: 'HH:mm dd:MM:yyyy'}}<br>
-                Waluta: {{item.currency}}<br>
-                Wynik: {{item.value}}<br>
+                Imię i Nazwisko: {{item.name}}
+                <br>
+                Data: {{item.date | date: 'HH:mm dd:MM:yyyy'}}
+                <br>
+                Waluta: {{item.currency}}
+                <br>
+                Wynik: {{item.value}}
+                <br>
             </div>
         </div>
     </div>
     <div class="center-content" *ngIf="response.length === 0 && nicknameValidationInfo.validationPass">
         <div class="response-container">
-        Brak danych
+            Brak danych
         </div>
-        
     </div>
 </div>
