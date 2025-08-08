@@ -6,7 +6,7 @@ import java.util.Locale;
 public class Utility
 {
     //Check if text have only letters space or _
-    public static Boolean CorrectNickname(String text)
+    public static Boolean correctNickname(String text)
     {
         if (text == null)
         {
@@ -16,7 +16,7 @@ public class Utility
     }
 
     //Check if text have only letters space or _
-    public static Boolean LettersOnly(String text)
+    public static Boolean lettersOnly(String text)
     {
         if (text == null)
         {

@@ -3,6 +3,7 @@ package com.example.exercise.Services;
 import com.example.exercise.Model.NBP.NBPResponse;
 import com.example.exercise.Model.NBP.Rate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,26 +16,17 @@ import java.util.List;
 @Service
 public class CurrencyService
 {
-    private final String NBPCurrencyAPI = "http://api.nbp.pl/api/exchangerates/tables/A?format=json";
+    @Value("${spring.NBPCurrencyAPI}")
+    private String NBPCurrencyAPI;
 
-    @Autowired
     private RestTemplate restTemplate;
 
-    //Return list of currencies
-    public List<Rate> currencyList() throws ResponseStatusException
+    @Autowired
+    CurrencyService(RestTemplate restTemplate)
     {
-        NBPResponse[] response;
-        try
-        {
-            response = restTemplate.getForObject(NBPCurrencyAPI, NBPResponse[].class);
-        }
-        catch (Exception e)
-        {
-            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
-                    "Service Unavailable");
-        }
-        return response[0].GetRates();
+        this.restTemplate = restTemplate;
     }
+
     //Return value of currency
     public Float getCurrencyValue(String currency) throws ResponseStatusException
     {

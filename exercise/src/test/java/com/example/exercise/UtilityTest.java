@@ -7,31 +7,31 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class UtilityTest
 {
     @Test
-    public void CorrectNickname()
+    public void correctNickname()
     {
-        assertThat(Utility.CorrectNickname("Edward")).isTrue();
-        assertThat(Utility.CorrectNickname("Anna")).isTrue();
-        assertThat(Utility.CorrectNickname("Ala;")).isFalse();
-        assertThat(Utility.CorrectNickname("Al")).isTrue();
-        assertThat(Utility.CorrectNickname("B")).isTrue();
-        assertThat(Utility.CorrectNickname("AqwertyuiopasdfghjklzxcvbnmAqwertyuiopasdfghjklzxcvbnmAqwertyuiopasdfghjklzxcvbnmAqwertyuiopasdfghjklzxcvbnmAqwertyuiopasdfghjklzxcvbnm")).isTrue();
-        assertThat(Utility.CorrectNickname("Geralt z Rivii")).isTrue();
-        assertThat(Utility.CorrectNickname("123344567")).isTrue();
-        assertThat(Utility.CorrectNickname("JSON123")).isTrue();
+        assertThat(Utility.correctNickname("Edward")).isTrue();
+        assertThat(Utility.correctNickname("Anna")).isTrue();
+        assertThat(Utility.correctNickname("Ala;")).isFalse();
+        assertThat(Utility.correctNickname("Al")).isTrue();
+        assertThat(Utility.correctNickname("B")).isTrue();
+        assertThat(Utility.correctNickname("AqwertyuiopasdfghjklzxcvbnmAqwertyuiopasdfghjklzxcvbnmAqwertyuiopasdfghjklzxcvbnmAqwertyuiopasdfghjklzxcvbnmAqwertyuiopasdfghjklzxcvbnm")).isTrue();
+        assertThat(Utility.correctNickname("Geralt z Rivii")).isTrue();
+        assertThat(Utility.correctNickname("123344567")).isTrue();
+        assertThat(Utility.correctNickname("JSON123")).isTrue();
     }
 
     @Test
     //Check if text have only letters space or _
-    public void LettersOnly()
+    public void lettersOnly()
     {
-        assertThat(Utility.LettersOnly("Edward")).isTrue();
-        assertThat(Utility.LettersOnly("Anna")).isTrue();
-        assertThat(Utility.LettersOnly("Ala;")).isFalse();
-        assertThat(Utility.LettersOnly("Al")).isTrue();
-        assertThat(Utility.LettersOnly("B")).isTrue();
-        assertThat(Utility.LettersOnly("AqwertyuiopasdfghjklzxcvbnmAqwertyuiopasdfghjklzxcvbnmAqwertyuiopasdfghjklzxcvbnmAqwertyuiopasdfghjklzxcvbnmAqwertyuiopasdfghjklzxcvbnm")).isTrue();
-        assertThat(Utility.LettersOnly("Geralt z Rivii")).isFalse();
-        assertThat(Utility.LettersOnly("123344567")).isFalse();
-        assertThat(Utility.LettersOnly("JSON123")).isFalse();
+        assertThat(Utility.lettersOnly("Edward")).isTrue();
+        assertThat(Utility.lettersOnly("Anna")).isTrue();
+        assertThat(Utility.lettersOnly("Ala;")).isFalse();
+        assertThat(Utility.lettersOnly("Al")).isTrue();
+        assertThat(Utility.lettersOnly("B")).isTrue();
+        assertThat(Utility.lettersOnly("AqwertyuiopasdfghjklzxcvbnmAqwertyuiopasdfghjklzxcvbnmAqwertyuiopasdfghjklzxcvbnmAqwertyuiopasdfghjklzxcvbnmAqwertyuiopasdfghjklzxcvbnm")).isTrue();
+        assertThat(Utility.lettersOnly("Geralt z Rivii")).isFalse();
+        assertThat(Utility.lettersOnly("123344567")).isFalse();
+        assertThat(Utility.lettersOnly("JSON123")).isFalse();
     }
 }

@@ -13,8 +13,13 @@ import java.util.List;
 @Service
 public class CurrencyDBService
 {
-    @Autowired
     private CurrencyRepository currencyRepository;
+
+    @Autowired
+    CurrencyDBService(CurrencyRepository currencyRepository)
+    {
+        this.currencyRepository = currencyRepository;
+    }
 
     //Save Request to Data base
     public CurrencyRequest saveCurrencyRequest(CurrencyRequest currencyRequest) throws ResponseStatusException
@@ -25,8 +30,7 @@ public class CurrencyDBService
         }
         catch (Exception e)
         {
-            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
-                    "Service Unavailable");
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Service Unavailable");
         }
     }
 
@@ -39,8 +43,7 @@ public class CurrencyDBService
         }
         catch (Exception e)
         {
-            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
-                    "Service Unavailable");
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Service Unavailable");
         }
     }
 
@@ -61,8 +64,7 @@ public class CurrencyDBService
         }
         catch (Exception e)
         {
-            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
-                    "Service Unavailable");
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Service Unavailable");
         }
         return RequestList;
     }
