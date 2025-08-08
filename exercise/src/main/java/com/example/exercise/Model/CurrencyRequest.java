@@ -15,20 +15,20 @@ import java.time.LocalDateTime;
 public class CurrencyRequest
 {
     @Id
-    @Column(name = "id")
+    //@Column(name = "id")
     @GeneratedValue
     private Integer id;
 
-    @Column(name = "currency")
+    //@Column(name = "currency")
     private String currency;
 
-    @Column(name = "name")
+    //@Column(name = "name")
     private String name;
 
     @Column(name = "request_date",updatable = false,insertable = false)
     private LocalDateTime date;
 
-    @Column(name = "value")
+    //@Column(name = "value")
     private Float value;
 
     //Constructor used do save data to database

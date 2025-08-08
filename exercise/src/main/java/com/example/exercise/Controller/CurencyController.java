@@ -3,6 +3,7 @@ package com.example.exercise.Controller;
 import com.example.exercise.Model.CurrencyRequest;
 import com.example.exercise.Model.NBP.NBPResponse;
 import com.example.exercise.Model.NBP.Rate;
+import com.example.exercise.Model.Request;
 import com.example.exercise.Services.CurrencyDBService;
 import com.example.exercise.Services.CurrencyService;
 import com.example.exercise.Validation;
@@ -32,11 +33,11 @@ public class CurencyController
 
     //Gives currency based from NBP API
     @PostMapping("/currencies/get-current-currency-value-command")
-    public Map<String,Float> GetCurrentCurrency(@RequestBody Map<String,String> request) throws ResponseStatusException
+    public Map<String,Float> GetCurrentCurrency(@RequestBody Request request) throws ResponseStatusException
     {
         //Get Data
-        String currency = request.get("currency");
-        String nickname = request.get("nickname");
+        String currency = request.getCurrency();
+        String nickname = request.getNickname();
 
         //Validation
         Validation.currencyValidation(currency);    //Validate currency
