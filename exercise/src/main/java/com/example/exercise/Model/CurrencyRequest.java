@@ -35,7 +35,7 @@ public class CurrencyRequest
         this.value = value;
     }
 
-    public String getName()
+    /*public String getName()
     {
         return this.name;
     }
@@ -43,5 +43,5 @@ public class CurrencyRequest
     public void setName(String name)
     {
         this.name = name;
-    }
+    }*/
 }

@@ -33,7 +33,7 @@ public class CurencyController
 
     //Gives currency based from NBP API
     @PostMapping("/currencies/get-current-currency-value-command")
-    public Map<String,Float> GetCurrentCurrency(@RequestBody Request request) throws ResponseStatusException
+    public Map<String,Float> getCurrentCurrency(@RequestBody Request request) throws ResponseStatusException
     {
         //Get Data
         String currency = request.getCurrency();
@@ -48,13 +48,9 @@ public class CurencyController
         //Response
         Map<String,Float> response = new HashMap<>();
 
-        //Send Request to NBP API
-        Float value = currencyService.getCurrencyValue(currency);
+        //Send Request to NBP API and save data
+        Float value = currencyService.getCurrencyValueAndSave(currency,nickname);
         response.put("value",value);
-
-        //Save data in database
-        CurrencyRequest RequestData = new CurrencyRequest(currency,nickname,value);
-        currencyDBService.saveCurrencyRequest(RequestData);
 
         System.out.println("Response to: "+nickname+" Currency: "+currency+" Value: "+value);
 
@@ -62,7 +58,7 @@ public class CurencyController
     }
 
     @GetMapping("/currencies/requests")
-    public List<CurrencyRequest> GetAllRequests()
+    public List<CurrencyRequest> getAllRequests()
     {
         //Get Request History from Data base
         List<CurrencyRequest> response = currencyDBService.getAllRequests();
@@ -74,10 +70,10 @@ public class CurencyController
 
     //Gives all data related to given nickname
     @PostMapping("/currencies/request")
-    public List<CurrencyRequest> RequestCurrency(@RequestBody Map<String,String> request) throws ResponseStatusException
+    public List<CurrencyRequest> requestCurrency(@RequestBody Request request) throws ResponseStatusException
     {
         //Get Data
-        String nickname = request.get("nickname");
+        String nickname = request.getNickname();
 
         Validation.nicknameValidation(nickname);
 
@@ -91,7 +87,7 @@ public class CurencyController
 
     //Endpoint made for testing. Sends empty Requests list
     @GetMapping("/test")
-    public List<CurrencyRequest> RequestCurrency()
+    public List<CurrencyRequest> requestCurrency()
     {
         System.out.println("Testing");
         //Response

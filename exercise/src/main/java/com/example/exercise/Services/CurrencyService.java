@@ -1,5 +1,6 @@
 package com.example.exercise.Services;
 
+import com.example.exercise.Model.CurrencyRequest;
 import com.example.exercise.Model.NBP.NBPResponse;
 import com.example.exercise.Model.NBP.Rate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,13 @@ public class CurrencyService
     private String NBPCurrencyAPI;
 
     private RestTemplate restTemplate;
+    private CurrencyDBService currencyDBService;
 
     @Autowired
-    CurrencyService(RestTemplate restTemplate)
+    CurrencyService(RestTemplate restTemplate,CurrencyDBService currencyDBService)
     {
         this.restTemplate = restTemplate;
+        this.currencyDBService = currencyDBService;
     }
 
     //Return value of currency
@@ -54,6 +57,13 @@ public class CurrencyService
             return 1.0000f;
         }
         throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "This currency don't exists");
+    }
+
+    public Float getCurrencyValueAndSave(String currency,String nickname) throws ResponseStatusException
+    {
+        Float value = this.getCurrencyValue(currency);
+        currencyDBService.saveCurrencyRequest(new CurrencyRequest(currency,nickname,value));
+        return value;
     }
 
 }
